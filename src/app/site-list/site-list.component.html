@@ -26,29 +26,11 @@
     </form>
   </div>
 
-  <div class="grid  grid-flow-col auto-cols-[minmax(1fr,2fr)] gap-5">
-    <div class="shadow-lg border-2 border-gray-900">
-      <img src="https://cdn.mos.cms.futurecdn.net/dcHyDicd7tuDEJX75NDoqV.jpeg" alt="">
-      <h3 class="p-3 text-xl font-bold">GoDaddy.com</h3>
-      <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounder-lg text-sm">https://godaddy.com</div>
-      <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
-        Password</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Edit</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Delete</button>
-    </div>
-    <div class="shadow-lg border-2 border-gray-900">
-      <img src="https://cdn.mos.cms.futurecdn.net/dcHyDicd7tuDEJX75NDoqV.jpeg" alt="">
-      <h3 class="p-3 text-xl font-bold">GoDaddy.com</h3>
-      <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounder-lg text-sm">https://godaddy.com</div>
-      <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
-        Password</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Edit</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Delete</button>
-    </div>
-    <div class="shadow-lg border-2 border-gray-900">
-      <img src="https://cdn.mos.cms.futurecdn.net/dcHyDicd7tuDEJX75NDoqV.jpeg" alt="">
-      <h3 class="p-3 text-xl font-bold">GoDaddy.com</h3>
-      <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounder-lg text-sm">https://godaddy.com</div>
+  <div class="grid  grid-cols-4 gap-5">
+    <div *ngFor="let site of allSites | async" class="shadow-2xl border-2 border-gray-900">
+      <img [src]="site.siteImgUrl" alt="" width="100%">
+      <h3 class="p-3 text-xl font-bold">{{site.siteName}}</h3>
+      <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounded-lg text-sm">{{site.siteUrl}}</div>
       <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
         Password</button>
       <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Edit</button>
