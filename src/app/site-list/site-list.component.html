@@ -1,4 +1,7 @@
 <div class="container mx-auto my-16">
+  <!-- <app-info-bar [showAlert]="showAlert" *ngIf="showAlert">
+    {{alertMessage}}
+  </app-info-bar> -->
   <h1 class="text-5xl mt-0 mb-5">Manager</h1>
   <p class="mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis fugit repellendus voluptatem
     incidunt
@@ -6,35 +9,58 @@
   <button class="mb-5 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-md">Add new site</button>
 
   <div class="px-20 py-10 mb-10 my-5 border-4 border-gray-900">
-    <h2 class="text-3xl text-center">Add New Site</h2>
-    <p class="text-center text-slate-500">You can add new site from the below form</p>
-    <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+    <h2 class="text-3xl text-center">
+      {{siteId?"Edit":"Add New"}} Site
+    </h2>
+    <p class="text-center text-slate-500">You can {{siteId?"edit":"add new"}} site from the below form</p>
+    <form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
       <div class="flex flex-col pt-1">
         <label for="" class="text-lg font-medium mb-0.5">Site name</label>
-        <input ngModel type="text" name="siteName" class="border-2 border-gray-900 p-2 rounded-lg">
+        <input type="text" formControlName="siteName" class="border-2 border-gray-900 p-2 rounded-lg">
       </div>
       <div class="flex flex-col pt-1">
         <label for="" class="text-lg font-medium mb-0.5">Site url</label>
-        <input ngModel type="text" name="siteUrl" class="border-2 border-gray-900 p-2 rounded-lg">
+        <input type="text" formControlName="siteUrl" class="border-2 border-gray-900 p-2 rounded-lg">
       </div>
       <div class="flex flex-col pt-1">
         <label for="" class="text-lg font-medium mb-0.5">Site Image Url</label>
-        <input ngModel type="text" name="siteImgUrl" class="border-2 border-gray-900 p-2 rounded-lg">
+        <input type="text" formControlName="siteImgUrl" class="border-2 border-gray-900 p-2 rounded-lg">
       </div>
-      <button class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white  shadow rounded-md">Submit</button>
-      <button class="mt-10 mx-0.5 px-5 py-3 text-sm border-gray-900 text-gray-900  shadow rounded-md">Cancel</button>
+      <button
+        class="mt-10 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white  shadow rounded-md">{{siteId?"Update":"Submit"}}</button>
+      <button type="reset"
+        class="mt-10 mx-0.5 px-5 py-3 text-sm border-gray-900 text-gray-900  shadow rounded-md">Cancel</button>
     </form>
   </div>
 
   <div class="grid  grid-cols-4 gap-5">
-    <div *ngFor="let site of allSites | async" class="shadow-2xl border-2 border-gray-900">
-      <img [src]="site.siteImgUrl" alt="" width="100%">
-      <h3 class="p-3 text-xl font-bold">{{site.siteName}}</h3>
-      <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounded-lg text-sm">{{site.siteUrl}}</div>
-      <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
-        Password</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Edit</button>
-      <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg">Delete</button>
-    </div>
+    <ng-container *ngIf="allSites | async as sites;else loading">
+      <div *ngFor="let site of allSites | async" class="shadow-2xl border-2 border-gray-900">
+        <img [src]="site.siteImgUrl" alt="" width="100%">
+        <h3 class="p-3 text-xl font-bold">{{site.siteName}}</h3>
+        <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounded-lg text-sm">{{site.siteUrl}}</div>
+        <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
+          Password</button>
+        <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg"
+          (click)="editSite(site)">Edit</button>
+        <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg"
+          (click)="deleteSite(site)">Delete</button>
+      </div>
+    </ng-container>
   </div>
 </div>
+
+<ng-template #loading>
+  <button type="button"
+    class="inline-flex items-center px-6 py-4 font-semibold leading-8 text-xl shadow-2xl rounded-lg text-white bg-indigo-500 hover:bg-indigo-400 transition ease-in-out duration-150 cursor-not-allowed"
+    disabled>
+    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+      </path>
+    </svg>
+    LOADING...
+  </button>
+</ng-template>
