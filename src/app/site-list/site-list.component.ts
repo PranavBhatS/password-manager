@@ -52,10 +52,6 @@ export class SiteListComponent implements OnInit {
     return this.siteForm.get('id')?.value
   }
 
-  get showAlert(): boolean {
-    return this.alertMessage !== null && this.alertMessage !== ""
-  }
-
   loadSites() {
     this.allSites = this.passwordManager.loadSites()
   }
