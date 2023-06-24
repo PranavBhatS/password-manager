@@ -39,7 +39,8 @@
         <img [src]="site.siteImgUrl" alt="" width="100%">
         <h3 class="p-3 text-xl font-bold">{{site.siteName}}</h3>
         <div class="w-60 m-3 px-3 bg-blue-200 text-blue-800 rounded-lg text-sm">{{site.siteUrl}}</div>
-        <button class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
+        <button routerLink="/password-list" [queryParams]="site"
+          class="my-3 ml-3 mx-0.5 px-5 py-3 text-sm bg-gray-900 text-white shadow rounded-lg">Add New
           Password</button>
         <button class="my-3 mx-0.5 px-5 py-3 text-sm border-2 border-gray-900 shadow rounded-lg"
           (click)="editSite(site)">Edit</button>
