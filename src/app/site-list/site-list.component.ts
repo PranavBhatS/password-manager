@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PasswordManagerService } from '../password-manager.service';
+import { PasswordManagerService } from '../shared/password-manager/password-manager.service';
 import { Observable } from 'rxjs';
 import { Site } from '../models/site';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
