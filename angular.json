@@ -23,6 +23,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "css",
+            "allowedCommonJsDependencies": [
+              "crypto-js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
