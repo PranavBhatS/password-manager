@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AppStateService } from './shared/app-state/app-state.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'password-manager';
+  isLoggedIn = false;
+  constructor(private appStateService: AppStateService, private router: Router) {
+    this.appStateService.getState().subscribe((val) => {
+      console.log(val)
+      this.isLoggedIn = val
+      // if (!val) {
+      //   this.router.navigate([''])
+      // }
+    })
+  }
+
 }

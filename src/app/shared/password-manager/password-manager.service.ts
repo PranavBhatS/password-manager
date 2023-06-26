@@ -4,13 +4,21 @@ import { Site } from '../../models/site';
 import { Observable, map } from 'rxjs';
 import { Password } from '../../models/password';
 import { PasswordEncryptDecryptService } from '../password-encrypt-decrypt/password-encrypt-decrypt.service';
+import { setPersistence, getAuth } from '@firebase/auth'
+import { Auth, NextOrObserver, UserCredential, browserLocalPersistence, browserSessionPersistence, signInWithEmailAndPassword } from '@angular/fire/auth';
+
+type Credentails = {
+  email: string;
+  password: string;
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class PasswordManagerService {
 
-  constructor(private fireStore: Firestore, private encryptDecryptService: PasswordEncryptDecryptService) { }
+  constructor(private fireStore: Firestore,
+    private auth: Auth, private encryptDecryptService: PasswordEncryptDecryptService) { }
 
   addSite(data: Site) {
     const dbInstance = collection(this.fireStore, 'sites')
@@ -64,6 +72,25 @@ export class PasswordManagerService {
     const docInstance = doc(this.fireStore, `sites/${siteId}/passwords`, passId)
     return deleteDoc(docInstance)
   }
+
+
+  /*
+  Login Queries
+  */
+  async login(cred: Credentails): Promise<UserCredential> {
+
+    await setPersistence(this.auth, browserSessionPersistence);
+    return await signInWithEmailAndPassword(this.auth, cred.email, cred.password);
+  }
+
+  logout() {
+    this.auth.signOut()
+  }
+
+  validateIdToken(fn: NextOrObserver<any>) {
+    return this.auth.onAuthStateChanged(fn)
+  }
+
 
 
 }
