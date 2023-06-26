@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { Site } from '../models/site';
 import { Password } from '../models/password';
-import { PasswordEncryptDecryptService } from '../shared/password-encrypt-decrypt.service';
+import { PasswordEncryptDecryptService } from '../shared/password-encrypt-decrypt/password-encrypt-decrypt.service';
 
 @Component({
   selector: 'app-password-list',
