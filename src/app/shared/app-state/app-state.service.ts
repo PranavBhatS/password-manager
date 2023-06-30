@@ -14,12 +14,14 @@ export class AppStateService {
     let obs: Subject<boolean> = new Subject()
     let ob = obs.asObservable()
     let validator = (user: any) => {
-      console.log(user)
+      const currentUser = JSON.parse(localStorage.getItem('user') || '')
       if (user) {
+        this.passwordManager.currentUser = user.uid
         obs.next(true)
         this.appState.next(true)
       }
       else {
+        this.passwordManager.currentUser = ''
         obs.next(false)
         this.appState.next(false)
       }
